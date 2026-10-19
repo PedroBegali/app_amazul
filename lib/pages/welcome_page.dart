@@ -80,7 +80,6 @@ class WelcomePage extends StatelessWidget {
                 style: TextStyle(fontSize: 16, color: Colors.white70),
               ),
               const SizedBox(height: 48),
-              // Botão 1: Chamariz (Iniciar Jogo)
               SizedBox(
                 width: double.infinity,
                 height: 54,
@@ -99,7 +98,6 @@ class WelcomePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              // Botão 2: Conhecer Conteúdos e Feira AMAZUL
               SizedBox(
                 width: double.infinity,
                 height: 54,

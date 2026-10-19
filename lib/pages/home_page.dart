@@ -21,7 +21,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // ABA 1: Categorias de Benefícios Nucleares
   Widget _buildAbaCategorias() {
     final listaExibida = _mostrarApenasFavoritas
         ? UraniaRepository.categorias.where((c) => c.favorita).toList()
@@ -75,7 +74,6 @@ class _HomePageState extends State<HomePage> {
                                 CategoriaDetalhePage(categoria: cat),
                           ),
                         );
-                        // Atualiza a tela caso o ranking tenha mudado após jogar
                         setState(() {});
                       },
                     );
@@ -86,7 +84,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ABA 2: Sobre a AMAZUL e CTMSP
   Widget _buildAbaAmazul() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -158,7 +155,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ABA 3: Sobre o Nosso Projeto Escolar + Ranking de Eventos
   Widget _buildAbaProjetoERanking() {
     final ranking = UraniaRepository.rankingFeira;
 

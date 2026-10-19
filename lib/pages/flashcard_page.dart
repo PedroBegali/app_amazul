@@ -88,8 +88,8 @@ class _FlashcardPageState extends State<FlashcardPage> {
         actions: [
           ElevatedButton(
             onPressed: () {
-              Navigator.pop(ctx); // Fecha o Dialog
-              Navigator.pop(context); // Volta para a tela da categoria
+              Navigator.pop(ctx);
+              Navigator.pop(context);
             },
             child: const Text('Concluir'),
           ),
@@ -113,7 +113,6 @@ class _FlashcardPageState extends State<FlashcardPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Cabeçalho de Status (Jogador + Placar em tempo real)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -134,7 +133,6 @@ class _FlashcardPageState extends State<FlashcardPage> {
               ],
             ),
             const SizedBox(height: 12),
-            // Card da Pergunta
             Card(
               elevation: 4,
               color: const Color(0xFF0A1931),
@@ -151,7 +149,6 @@ class _FlashcardPageState extends State<FlashcardPage> {
               ),
             ),
             const SizedBox(height: 16),
-            // Alternativas de Múltipla Escolha
             Expanded(
               child: ListView.builder(
                 itemCount: cardAtual.opcoes.length,
@@ -172,8 +169,10 @@ class _FlashcardPageState extends State<FlashcardPage> {
                     color: corCard,
                     child: RadioListTile<int>(
                       value: index,
+                      // ignore: deprecated_member_use
                       groupValue: _opcaoSelecionada,
                       title: Text(cardAtual.opcoes[index]),
+                      // ignore: deprecated_member_use
                       onChanged: _respostaConfirmada
                           ? null
                           : (valor) {
@@ -186,7 +185,6 @@ class _FlashcardPageState extends State<FlashcardPage> {
                 },
               ),
             ),
-            // Verso do Flashcard (Explicação exibida após responder)
             if (_respostaConfirmada)
               Container(
                 padding: const EdgeInsets.all(12),
@@ -201,7 +199,6 @@ class _FlashcardPageState extends State<FlashcardPage> {
                   style: const TextStyle(fontSize: 14),
                 ),
               ),
-            // Botão de Ação (Confirmar ou Próxima)
             SizedBox(
               height: 50,
               child: ElevatedButton(

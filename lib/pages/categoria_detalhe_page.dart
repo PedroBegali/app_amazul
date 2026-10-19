@@ -74,7 +74,6 @@ class CategoriaDetalhePage extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
-            // Opção 1: Treino livre sem cadastro
             SizedBox(
               width: double.infinity,
               height: 50,
@@ -98,7 +97,6 @@ class CategoriaDetalhePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            // Opção 2: Desafio da Feira (Abre o Formulário de Check-in)
             SizedBox(
               width: double.infinity,
               height: 50,

@@ -116,7 +116,7 @@ class _CheckinFeiraPageState extends State<CheckinFeiraPage> {
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
-                value: _modoSelecionado,
+                initialValue: _modoSelecionado,
                 decoration: const InputDecoration(
                   labelText: 'Modalidade de Jogo',
                   border: OutlineInputBorder(),
