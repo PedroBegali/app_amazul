@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
 import 'home_page.dart';
+import 'sobre_projeto_page.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
 
-  void _mostrarTeaserJogo(BuildContext context) {
+  void _mostrarModalModoAventura(BuildContext context) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Row(
-          children: [
-            Icon(Icons.videogame_asset, color: Colors.indigo),
-            SizedBox(width: 8),
-            Expanded(child: Text('Modo Aventura: Em Breve!')),
-          ],
+        backgroundColor: const Color(0xFF0D2B45),
+        title: const Text(
+          '⚛️ Modo Campanha (Em Breve)',
+          style: TextStyle(color: Colors.amber, fontWeight: FontWeight.bold),
         ),
         content: const Text(
-          'A campanha principal do UrâniaQuest está em desenvolvimento!\n\n'
-          'Nela, você assumirá o papel de um cientista no Centro Tecnológico da Marinha '
-          'resolvendo missões reais na saúde, agricultura e geração de energia limpa.\n\n'
-          'Enquanto isso, explore nossos conteúdos interativos e participe do Desafio de Flashcards da Feira AMAZUL!',
+          'A jornada completa do UrâniaQuest está sendo construída!\n\n'
+          'Enquanto isso, clique em "Explorar conteúdos" para acessar os Flashcards interativos da Feira AMAZUL e disputar o Ranking de brindes!',
+          style: TextStyle(color: Colors.white),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Fechar'),
+            child: const Text(
+              'Voltar',
+              style: TextStyle(color: Colors.white70),
+            ),
           ),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.amber),
             onPressed: () {
               Navigator.pop(ctx);
               Navigator.push(
@@ -34,7 +36,13 @@ class WelcomePage extends StatelessWidget {
                 MaterialPageRoute(builder: (_) => const HomePage()),
               );
             },
-            child: const Text('Ir para Conteúdos e Quiz'),
+            child: const Text(
+              'Ir para Categorias',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ],
       ),
@@ -44,85 +52,145 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(24),
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF0A1931), Color(0xFF185ADB)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+      backgroundColor: const Color(0xFF071A2E),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(
+            'assets/bg_player.jpg',
+            fit: BoxFit.cover, // Preenche a tela inteira
+            errorBuilder: (_, __, ___) =>
+                Container(color: const Color(0xFF071A2E)),
           ),
-        ),
-        child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.public,
-                size: 100,
-                color: Colors.cyanAccent,
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.transparent,
+                  const Color(0xFF051322).withOpacity(0.85),
+                  const Color(0xFF051322),
+                ],
+                stops: const [0.4, 0.8, 1.0],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
               ),
-              const SizedBox(height: 20),
-              const Text(
-                'UrâniaQuest',
-                style: TextStyle(
-                  fontSize: 34,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  letterSpacing: 1.2,
-                ),
-              ),
-              const SizedBox(height: 12),
-              const Text(
-                'Desmistificando a tecnologia nuclear: descubra como a ciência transforma a saúde, a alimentação e o futuro energético do Brasil.',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16, color: Colors.white70),
-              ),
-              const SizedBox(height: 48),
-              SizedBox(
-                width: double.infinity,
-                height: 54,
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.amber,
-                    foregroundColor: Colors.black87,
-                    textStyle: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+            ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              child: Column(
+                children: [
+                  const SizedBox(height: 16),
+
+                  Image.asset(
+                    'assets/logo_urania.png',
+                    fit: BoxFit.contain,
+                    height: 90,
+                    errorBuilder: (_, __, ___) => const Text(
+                      'URÂNIA\nQUEST',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 44,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                  icon: const Icon(Icons.play_arrow),
-                  label: const Text('Iniciar Jogo'),
-                  onPressed: () => _mostrarTeaserJogo(context),
-                ),
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                height: 54,
-                child: OutlinedButton.icon(
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    side: const BorderSide(color: Colors.cyanAccent, width: 2),
-                    textStyle: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
+
+                  const Spacer(),
+
+                  SizedBox(
+                    width: double.infinity,
+                    height: 54,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFFFCA28),
+                        foregroundColor: const Color(0xFF071A2E),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        elevation: 6,
+                      ),
+                      onPressed: () => _mostrarModalModoAventura(context),
+                      child: const Text(
+                        'Jogar',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
                     ),
                   ),
-                  icon: const Icon(Icons.menu_book),
-                  label: const Text('Conhecer Nossos Conteúdos'),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const HomePage()),
-                    );
-                  },
-                ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 54,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF0E7C96),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        elevation: 4,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const HomePage()),
+                        );
+                      },
+                      child: const Text(
+                        'Explorar conteúdos',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 54,
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: const Color(
+                          0xFF0A2239,
+                        ).withOpacity(0.8),
+                        foregroundColor: Colors.white,
+                        side: const BorderSide(
+                          color: Color(0xFF286684),
+                          width: 1.5,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const SobreProjetoPage(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Sobre o projeto',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

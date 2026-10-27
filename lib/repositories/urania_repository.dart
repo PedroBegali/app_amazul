@@ -4,179 +4,204 @@ import '../models/flashcard.dart';
 import '../models/participante.dart';
 
 class UraniaRepository {
-  
   static final List<Categoria> categorias = [
     Categoria(
       id: 1,
-      titulo: 'Alimentação e Agricultura',
-      subtitulo: 'Irradiação de alimentos e conservação segura',
-      textoEducativo:
-          'A irradiação de alimentos utiliza feixes controlados de energia para eliminar bactérias, fungos e insetos, aumentando a validade de frutas, grãos e carnes sem alterar seu sabor e SEM deixar o alimento radioativo.',
-      impactoPratico:
-          'Reduz o desperdício de alimentos e permite exportar frutas brasileiras cumprindo rigorosas normas sanitárias internacionais.',
-      icone: Icons.eco,
-      cor: Colors.green,
+      titulo: 'Alimentação',
+      subtitulo: 'Conservação de alimentos e segurança alimentar',
+      iconeAsset: './assets/icone_alimentacao.png',
+      corFundoIcone: const Color(0xFFDFF5E3),
+      imagemUrl:
+          'https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&q=80',
+      resumoEducativo:
+          'A irradiação alimentar utiliza feixes controlados de energia para eliminar bactérias, fungos e pragas, aumentando a durabilidade de frutas, grãos e verduras sem alterar o sabor e sem torná-los radioativos.',
     ),
     Categoria(
       id: 2,
-      titulo: 'Saúde e Medicina Nuclear',
-      subtitulo: 'Radiofármacos para diagnóstico e tratamento',
-      textoEducativo:
-          'Na medicina, os radiofármacos funcionam como "marcadores inteligentes" que permitem detectar tumores precocemente (como em exames PET-CT) e tratar o câncer de forma localizada, preservando células saudáveis.',
-      impactoPratico:
-          'O Brasil busca autossuficiência na produção de radioisótopos através do Reator Multipropósito Brasileiro (RMB), com forte participação da AMAZUL.',
-      icone: Icons.medical_services,
-      cor: Colors.redAccent,
+      titulo: 'Saúde',
+      subtitulo: 'Medicina nuclear e diagnóstico',
+      iconeAsset: './assets/icone_saude.png',
+      corFundoIcone: const Color(0xFFE5DEFF),
+      imagemUrl:
+          'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&q=80',
+      resumoEducativo:
+          'Radiofármacos permitem diagnosticar doenças precocemente (como em exames PET-CT) e tratar tumores de forma localizada. A AMAZUL atua no projeto do Reator Multipropósito Brasileiro (RMB) para tornar o Brasil autossuficiente.',
     ),
     Categoria(
       id: 3,
-      titulo: 'Soberania e Energia Limpa',
-      subtitulo: 'Eletricidade contínua sem emissão de efeito estufa',
-      textoEducativo:
-          'As usinas nucleares geram energia de base (24h por dia, independente de chuva ou sol) com baixíssima emissão de carbono. Além disso, o domínio do ciclo do combustível nuclear garante soberania tecnológica ao país.',
-      impactoPratico:
-          'Garante estabilidade energética para grandes centros urbanos e hospitais mesmo em períodos de seca nos reservatórios hidrelétricos.',
-      icone: Icons.bolt,
-      cor: Colors.blueAccent,
+      titulo: 'Energia',
+      subtitulo: 'Geração de energia limpa',
+      iconeAsset: './assets/icone_energia.png',
+      corFundoIcone: const Color(0xFFFEF3C7),
+      imagemUrl:
+          'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&q=80',
+      resumoEducativo:
+          'As usinas nucleares fornecem energia limpa de base 24 horas por dia, sem emitir gases de efeito estufa e sem depender do clima, garantindo estabilidade para hospitais, indústrias e residências.',
     ),
     Categoria(
       id: 4,
-      titulo: 'Indústria e Pesquisa',
-      subtitulo: 'Gamagrafia industrial e preservação cultural',
-      textoEducativo:
-          'Técnicas nucleares permitem inspecionar soldas de aviões e dutos de petróleo como se fosse um "raio-X industrial", além de descontaminar obras de arte e livros históricos sem danificar o papel.',
-      impactoPratico:
-          'Prevenção de acidentes na aviação e na indústria naval utilizando ensaios não destrutivos.',
-      icone: Icons.precision_manufacturing,
-      cor: Colors.orange,
+      titulo: 'Amazônia Azul',
+      subtitulo: 'Tecnologia e defesa',
+      iconeAsset: './assets/icone_amazul.png',
+      corFundoIcone: const Color(0xFFDCEEFF),
+      imagemUrl:
+          'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=600&q=80',
+      resumoEducativo:
+          'O Programa Nuclear da Marinha (PNM) e a AMAZUL desenvolvem tecnologia 100% nacional para propulsão naval e proteção das riquezas naturais da Amazônia Azul brasileira.',
+    ),
+    Categoria(
+      id: 5,
+      titulo: 'Indústria',
+      subtitulo: 'Aplicações industriais',
+      iconeAsset: './assets/icone_industria.png',
+      corFundoIcone: const Color(0xFFF3E5F5),
+      imagemUrl:
+          'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80',
+      resumoEducativo:
+          'A gamagrafia industrial funciona como um raio-X de alta precisão para inspecionar soldas de aviões, navios e tubulações sem danificar as peças.',
+    ),
+    Categoria(
+      id: 6,
+      titulo: 'Pesquisa e Inovação',
+      subtitulo: 'Ciência para o futuro',
+      iconeAsset: './assets/icone_pesquisa.png',
+      corFundoIcone: const Color(0xFFE0F7FA),
+      imagemUrl:
+          'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&q=80',
+      resumoEducativo:
+          'Centros de pesquisa utilizam técnicas nucleares para preservar obras históricas, estudar solos agrícolas e desenvolver novos materiais.',
     ),
   ];
 
   static final List<Flashcard> flashcards = [
-    // Categoria 1: Alimentação
+    // Categoria 1: Alimentação (Idêntico à Tela 3 da imagem!)
     Flashcard(
       id: 1,
       categoriaId: 1,
-      pergunta: 'Um alimento que passa pelo processo de irradiação fica radioativo?',
-      opcoes: [
-        'Sim, por isso deve esperar 10 dias para consumo',
-        'Não, a energia apenas elimina microrganismos sem deixar resíduos',
-        'Apenas se for aquecido no micro-ondas depois',
-        'Sim, mas em níveis baixos',
-      ],
-      indiceCorreto: 1,
+      pergunta: 'Os alimentos tratados por irradiação ficam radioativos.',
+      opcoes: ['Verdadeiro', 'Falso', 'Depende do contexto'],
+      indiceCorreto: 1, // Falso
       explicacao:
-          'Assim como uma pessoa não fica radioativa ao fazer um exame de Raio-X, o alimento irradiado apenas recebe um feixe de energia que elimina pragas e bactérias.',
+          'Falso! O alimento apenas recebe ondas de energia para eliminar microrganismos, exatamente como em um raio-X médico, sem reter radioatividade.',
     ),
     Flashcard(
       id: 2,
       categoriaId: 1,
-      pergunta: 'Qual é o principal benefício da irradiação em frutas como morango e manga?',
+      pergunta:
+          'Qual é o efeito prático da irradiação em morangos, batatas e grãos?',
       opcoes: [
-        'Aumentar o tamanho da fruta em 3x',
-        'Mudar a cor da fruta artificialmente',
-        'Retardar o apodrecimento e eliminar fungos sem usar agrotóxicos',
-        'Deixar a fruta mais salgada',
+        'Aumenta a validade e evita o brotamento sem usar químicos',
+        'Altera o sabor para deixá-los mais doces',
+        'Substitui a necessidade de lavar a fruta',
       ],
-      indiceCorreto: 2,
+      indiceCorreto: 0,
       explicacao:
-          'A irradiação inibe o brotamento (em batatas e cebolas) e retarda o amadurecimento de frutas, evitando o desperdício no transporte.',
+          'A técnica retarda a maturação e impede que batatas e cebolas germinem no estoque, reduzindo drasticamente o desperdício.',
     ),
 
     // Categoria 2: Saúde
     Flashcard(
       id: 3,
       categoriaId: 2,
-      pergunta: 'O que são os radiofármacos utilizados nos hospitais?',
+      pergunta:
+          'Os radiofármacos são utilizados apenas para tratamento de doenças graves.',
       opcoes: [
-        'Antibióticos comuns vendidos em farmácia',
-        'Medicamentos com elementos radioativos seguros para diagnóstico e terapia de doenças como o câncer',
-        'Vitaminas para atletas de corrida',
-        'Vacinas contra gripe',
+        'Verdadeiro',
+        'Falso, também são essenciais para diagnósticos precisos',
+        'Depende do hospital',
       ],
       indiceCorreto: 1,
       explicacao:
-          'Radiofármacos emitem pequenas quantidades de radiação que câmeras especiais captam para mapear órgãos ou destruir células tumorais com precisão.',
+          'Grande parte dos radiofármacos é usada em exames de imagem (cintilografia e PET-CT) para detectar problemas cardíacos, ósseos e oncológicos bem no início.',
     ),
+
+    // Categoria 3: Energia
     Flashcard(
       id: 4,
-      categoriaId: 2,
-      pergunta: 'Qual grande projeto conta com a engenharia da AMAZUL para tornar o Brasil autossuficiente em radiofármacos?',
+      categoriaId: 3,
+      pergunta:
+          'A fumaça branca que sai das torres das usinas nucleares é gás carbônico.',
       opcoes: [
-        'Reator Multipropósito Brasileiro (RMB)',
-        'Usina de Itaipu',
-        'Ponte Rio-Niterói',
-        'Satélite Amazônia-1',
+        'Verdadeiro',
+        'Falso, é apenas vapor de água limpa',
+        'Depende da potência do reator',
+      ],
+      indiceCorreto: 1,
+      explicacao:
+          'As torres de resfriamento liberam exclusivamente vapor de água. A geração nuclear não queima combustíveis fósseis.',
+    ),
+
+    // Categoria 4: Amazônia Azul
+    Flashcard(
+      id: 5,
+      categoriaId: 4,
+      pergunta:
+          'O Brasil domina o ciclo completo de enriquecimento do combustível nuclear.',
+      opcoes: ['Verdadeiro', 'Falso', 'Depende de importação total'],
+      indiceCorreto: 0,
+      explicacao:
+          'Graças ao Programa Nuclear da Marinha (PNM) e ao CTMSP, o Brasil faz parte do seleto grupo de países que dominam o ciclo do combustível para fins pacíficos.',
+    ),
+
+    // Categoria 5: Indústria
+    Flashcard(
+      id: 6,
+      categoriaId: 5,
+      pergunta:
+          'A radiação gama pode inspecionar turbinas de avião sem desmontar a peça.',
+      opcoes: ['Verdadeiro', 'Falso', 'Apenas peças de plástico'],
+      indiceCorreto: 0,
+      explicacao:
+          'Por meio da gamagrafia industrial (ensaio não destrutivo), é possível identificar trincas internas invisíveis a olho nu.',
+    ),
+
+    // Categoria 6: Pesquisa e Inovação
+    Flashcard(
+      id: 7,
+      categoriaId: 6,
+      pergunta:
+          'Livros raros e obras de museus podem ser descontaminados com radiação.',
+      opcoes: [
+        'Verdadeiro',
+        'Falso, o papel queima',
+        'Apenas esculturas de metal',
       ],
       indiceCorreto: 0,
       explicacao:
-          'O RMB (Reator Multipropósito Brasileiro) produzirá radioisótopos essenciais para o SUS e clínicas de medicina nuclear em todo o país.',
-    ),
-
-    // Categoria 3: Soberania e Energia
-    Flashcard(
-      id: 5,
-      categoriaId: 3,
-      pergunta: 'Por que a energia nuclear é considerada uma aliada contra o aquecimento global?',
-      opcoes: [
-        'Porque esfria a água dos oceanos',
-        'Porque gera grande quantidade de eletricidade sem queimar combustíveis fósseis e sem emitir CO2 na operação',
-        'Porque depende do vento para funcionar',
-        'Porque consome gás carbônico do ar',
-      ],
-      indiceCorreto: 1,
-      explicacao:
-          'O vapor que sai das torres de resfriamento é apenas vapor de água limpa, não fumaça poluente.',
-    ),
-
-    // Categoria 4: Indústria
-    Flashcard(
-      id: 6,
-      categoriaId: 4,
-      pergunta: 'Como a tecnologia nuclear ajuda a preservar acervos históricos e museus?',
-      opcoes: [
-        'Pintando os quadros automaticamente',
-        'Eliminando cupins, traças e fungos de livros raros através da radiação gama sem molhar ou rasgar as páginas',
-        'Digitalizando páginas em PDF',
-        'Congelando as esculturas',
-      ],
-      indiceCorreto: 1,
-      explicacao:
-          'A desinfestação por radiação gama salva documentos históricos inteiros de pragas sem usar produtos químicos líquidos.',
+          'A radiação elimina cupins, fungos e brocas de acervos históricos inteiros sem precisar molhar ou aplicar venenos nas páginas.',
     ),
   ];
 
   static final List<Participante> rankingFeira = [
     Participante(
-      nome: 'Marina Silva (Visitante)',
+      nome: 'Marina Silva',
       email: 'marina@email.com',
-      modoJogo: 'Individual (Ranking)',
-      categoriaJogada: 'Saúde e Medicina Nuclear',
+      modoJogo: 'Individual (Feira)',
+      categoriaJogada: 'Alimentação',
+      pontuacao: 250,
+    ),
+    Participante(
+      nome: 'Lucas vs Gabriel',
+      email: 'lucas@email.com',
+      modoJogo: 'Disputa 1v1',
+      categoriaJogada: 'Amazônia Azul',
       pontuacao: 200,
     ),
     Participante(
-      nome: 'Lucas Souza vs Gabriel',
-      email: 'lucas@email.com',
-      modoJogo: 'Disputa 1v1',
-      categoriaJogada: 'Alimentação e Agricultura',
-      pontuacao: 150,
-    ),
-    Participante(
-      nome: 'Beatriz Oliveira',
+      nome: 'Beatriz Costa',
       email: 'bia@email.com',
-      modoJogo: 'Individual (Ranking)',
-      categoriaJogada: 'Soberania e Energia Limpa',
-      pontuacao: 100,
+      modoJogo: 'Individual (Feira)',
+      categoriaJogada: 'Saúde',
+      pontuacao: 150,
     ),
   ];
 
-  static List<Flashcard> buscarFlashcardsPorCategoria(int categoriaId) {
+  static List<Flashcard> buscarPorCategoria(int categoriaId) {
     return flashcards.where((f) => f.categoriaId == categoriaId).toList();
   }
 
-  static void adicionarParticipanteRanking(Participante novo) {
-    rankingFeira.add(novo);
-
+  static void adicionarNoRanking(Participante p) {
+    rankingFeira.add(p);
     rankingFeira.sort((a, b) => b.pontuacao.compareTo(a.pontuacao));
   }
 }

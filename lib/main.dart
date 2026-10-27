@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'pages/welcome_page.dart';
+import 'theme/app_theme.dart';
 
 void main() {
   runApp(const UraniaQuestApp());
@@ -13,10 +14,7 @@ class UraniaQuestApp extends StatelessWidget {
     return MaterialApp(
       title: 'UrâniaQuest',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0A1931)),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.tema,
       home: const WelcomePage(),
     );
   }

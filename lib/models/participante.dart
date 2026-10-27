@@ -3,7 +3,7 @@ class Participante {
   final String email;
   final String modoJogo;
   final String categoriaJogada;
-  int pontuacao;
+  final int pontuacao;
 
   Participante({
     required this.nome,

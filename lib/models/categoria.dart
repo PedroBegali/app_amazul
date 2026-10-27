@@ -4,20 +4,20 @@ class Categoria {
   final int id;
   final String titulo;
   final String subtitulo;
-  final String textoEducativo;
-  final String impactoPratico;
-  final IconData icone;
-  final Color cor;
+  final String iconeAsset;
+  final Color corFundoIcone;
+  final String imagemUrl;
+  final String resumoEducativo;
   bool favorita;
 
   Categoria({
     required this.id,
     required this.titulo,
     required this.subtitulo,
-    required this.textoEducativo,
-    required this.impactoPratico,
-    required this.icone,
-    required this.cor,
+    required this.iconeAsset,
+    required this.corFundoIcone,
+    required this.imagemUrl,
+    required this.resumoEducativo,
     this.favorita = false,
   });
 }

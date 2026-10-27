@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../models/categoria.dart';
 import '../repositories/urania_repository.dart';
+import '../theme/app_theme.dart';
 import '../widgets/categoria_list_item.dart';
+import '../widgets/fundo_degrade.dart';
 import 'categoria_detalhe_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,208 +13,174 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _abaAtual = 0;
-  bool _mostrarApenasFavoritas = false;
+  int _abaSelecionada =
+      1; // Já abre na aba "Conteúdos" igual à Tela 2 da imagem!
 
-  void _alternarFavorito(Categoria cat) {
-    setState(() {
-      cat.favorita = !cat.favorita;
-    });
+  // Cor da bolinha de posição no ranking: ouro, prata, bronze e depois teal.
+  Color _corMedalha(int index) {
+    if (index == 0) return AppColors.amarelo;
+    if (index == 1) return AppColors.prata;
+    if (index == 2) return AppColors.bronze;
+    return AppColors.teal;
   }
 
-  Widget _buildAbaCategorias() {
-    final listaExibida = _mostrarApenasFavoritas
-        ? UraniaRepository.categorias.where((c) => c.favorita).toList()
-        : UraniaRepository.categorias;
+  // ABA 1: Conteúdos (Lista de Categorias da Tela 2)
+  Widget _buildAbaConteudos() {
+    final categorias = UraniaRepository.categorias;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(16),
-          color: Colors.indigo.shade50,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Expanded(
-                child: Text(
-                  'Escolha uma frente tecnológica para estudar ou competir nos Flashcards:',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                ),
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      itemCount: categorias.length,
+      itemBuilder: (context, index) {
+        final cat = categorias[index];
+        return CategoriaListItem(
+          categoria: cat,
+          onTap: () async {
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => CategoriaDetalhePage(categoria: cat),
               ),
-              FilterChip(
-                label: const Text('Favoritos'),
-                selected: _mostrarApenasFavoritas,
-                onSelected: (valor) {
-                  setState(() {
-                    _mostrarApenasFavoritas = valor;
-                  });
-                },
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: listaExibida.isEmpty
-              ? const Center(
-                  child: Text('Nenhuma categoria marcada como favorita.'),
-                )
-              : ListView.builder(
-                  itemCount: listaExibida.length,
-                  itemBuilder: (context, index) {
-                    final cat = listaExibida[index];
-                    return CategoriaListItem(
-                      categoria: cat,
-                      onFavoritar: () => _alternarFavorito(cat),
-                      onTap: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) =>
-                                CategoriaDetalhePage(categoria: cat),
-                          ),
-                        );
-                        setState(() {});
-                      },
-                    );
-                  },
-                ),
-        ),
-      ],
+            );
+            setState(() {});
+          },
+        );
+      },
     );
   }
 
-  Widget _buildAbaAmazul() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Card(
-            color: const Color(0xFF0A1931),
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: const [
-                  Icon(Icons.anchor, size: 56, color: Colors.cyanAccent),
-                  SizedBox(height: 12),
-                  Text(
-                    'AMAZUL & CTMSP',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Amazônia Azul Tecnologias de Defesa S.A. e Centro Tecnológico da Marinha em São Paulo',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white70),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          const Text(
-            'Quem é a AMAZUL?',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'A AMAZUL é uma empresa pública federal criada para promover, desenvolver e manter tecnologias necessárias às atividades do Programa Nuclear da Marinha (PNM), do Programa de Desenvolvimento de Submarinos (PROSUB) e do Programa Nuclear Brasileiro (PNB).',
-            style: TextStyle(fontSize: 15, height: 1.4),
-          ),
-          const SizedBox(height: 16),
-          const Text(
-            'Atuação em Benefício da Sociedade',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8),
-          const Card(
-            child: ListTile(
-              leading: Icon(Icons.local_hospital, color: Colors.redAccent),
-              title: Text('Reator Multipropósito Brasileiro (RMB)'),
-              subtitle: Text(
-                'Parceria para produção nacional de radiofármacos usados no diagnóstico e tratamento do câncer.',
-              ),
-            ),
-          ),
-          const Card(
-            child: ListTile(
-              leading: Icon(Icons.security, color: Colors.blue),
-              title: Text('Domínio do Ciclo do Combustível Nuclear'),
-              subtitle: Text(
-                'Tecnologia 100% nacional que garante soberania energética e capacitação científica de ponta.',
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAbaProjetoERanking() {
+  // ABA 2: Ranking da Feira AMAZUL
+  Widget _buildAbaRanking() {
     final ranking = UraniaRepository.rankingFeira;
 
-    return SingleChildScrollView(
+    return ListView.builder(
       padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Sobre o Projeto UrâniaQuest',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      itemCount: ranking.length,
+      itemBuilder: (context, index) {
+        final p = ranking[index];
+        final medalha = _corMedalha(index);
+        // Texto preto sobre ouro/prata/bronze (cores claras); branco sobre teal.
+        final corTextoPosicao = index < 3 ? Colors.black : Colors.white;
+
+        return Card(
+          color: AppColors.cartaoClaro,
+          elevation: 4,
+          shadowColor: Colors.black54,
+          margin: const EdgeInsets.only(bottom: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
           ),
-          const SizedBox(height: 8),
-          const Text(
-            'Desenvolvido por estudantes do 2º ano de Análise e Desenvolvimento de Sistemas da FIAP, o UrâniaQuest nasceu para combater a desinformação histórica sobre a energia nuclear.\n\n'
-            'Pensado para feiras, escolas e eventos institucionais da AMAZUL, o app une conteúdo acessível a uma mecânica de Flashcards competitivos (Solo ou 1v1), permitindo premiar os melhores colocados com brindes educativos.',
-            style: TextStyle(fontSize: 15, height: 1.4),
-          ),
-          const Divider(height: 32, thickness: 1),
-          Row(
-            children: const [
-              Icon(Icons.emoji_events, color: Colors.amber, size: 28),
-              SizedBox(width: 8),
-              Text(
-                'Ranking do Estande (Brindes)',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 6,
+            ),
+            leading: CircleAvatar(
+              backgroundColor: medalha,
+              foregroundColor: corTextoPosicao,
+              child: Text(
+                '${index + 1}º',
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: ranking.length,
-            itemBuilder: (context, index) {
-              final p = ranking[index];
-              return Card(
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor:
-                        index == 0 ? Colors.amber : Colors.indigo.shade100,
-                    child: Text(
-                      '${index + 1}º',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  title: Text(p.nome),
-                  subtitle: Text('${p.categoriaJogada} • ${p.modoJogo}'),
-                  trailing: Text(
-                    '${p.pontuacao} pts',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Colors.indigo,
-                    ),
+            ),
+            title: Text(
+              p.nome,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: AppColors.textoEscuro,
+              ),
+            ),
+            subtitle: Text(
+              '${p.categoriaJogada} • ${p.modoJogo}',
+              style: const TextStyle(color: AppColors.textoMedio),
+            ),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.monetization_on,
+                  color: Color(0xFFF5A300),
+                  size: 22,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  '${p.pontuacao}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 17,
+                    color: AppColors.fundo,
                   ),
                 ),
-              );
-            },
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  // ABA 3: Perfil do Visitante / Estatísticas
+  Widget _buildAbaPerfil() {
+    return Padding(
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        children: [
+          // Anel ciano ao redor do avatar (como o avatar da Tela 3).
+          Container(
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: AppColors.ciano, width: 3),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.ciano.withValues(alpha: 0.35),
+                  blurRadius: 18,
+                ),
+              ],
+            ),
+            child: const CircleAvatar(
+              radius: 48,
+              backgroundColor: AppColors.teal,
+              child: Icon(Icons.person, size: 54, color: Colors.white),
+            ),
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            'Explorador Nuclear',
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 6),
+          const Text(
+            'Estande Interativo • AMAZUL & CTMSP',
+            style: TextStyle(color: AppColors.ciano),
+          ),
+          const SizedBox(height: 24),
+          Card(
+            color: AppColors.painel,
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
+              side: const BorderSide(color: AppColors.bordaEscura),
+            ),
+            child: ListTile(
+              leading: const Icon(Icons.emoji_events, color: AppColors.amarelo),
+              title: const Text(
+                'Participantes no Ranking Hoje',
+                style: TextStyle(color: Colors.white),
+              ),
+              trailing: Text(
+                '${UraniaRepository.rankingFeira.length}',
+                style: const TextStyle(
+                  color: AppColors.amarelo,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ),
         ],
       ),
@@ -222,41 +189,56 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final paginas = [
-      _buildAbaCategorias(),
-      _buildAbaAmazul(),
-      _buildAbaProjetoERanking(),
-    ];
+    final titulos = ['Início', 'Categorias', 'Ranking da Feira', 'Perfil'];
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('UrâniaQuest • Conteúdos'),
-        backgroundColor: const Color(0xFF0A1931),
-        foregroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(titulos[_abaSelecionada]),
       ),
-      body: paginas[_abaAtual],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _abaAtual,
-        selectedItemColor: const Color(0xFF185ADB),
-        onTap: (novoIndice) {
-          setState(() {
-            _abaAtual = novoIndice;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.category),
-            label: 'Categorias',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.anchor),
-            label: 'AMAZUL',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.emoji_events),
-            label: 'Projeto & Ranking',
-          ),
-        ],
+      body: FundoDegrade(
+        child: _abaSelecionada == 1
+            ? _buildAbaConteudos()
+            : (_abaSelecionada == 2 ? _buildAbaRanking() : _buildAbaPerfil()),
+      ),
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
+        child: BottomNavigationBar(
+          backgroundColor: AppColors.fundoBase,
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _abaSelecionada,
+          selectedItemColor: AppColors.ciano,
+          unselectedItemColor: Colors.white54,
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+          elevation: 0,
+          onTap: (index) {
+            if (index == 0) {
+              Navigator.pop(context);
+            } else {
+              setState(() {
+                _abaSelecionada = index;
+              });
+            }
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_filled),
+              label: 'Início',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.menu_book_rounded),
+              label: 'Conteúdos',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bar_chart_rounded),
+              label: 'Ranking',
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
+          ],
+        ),
       ),
     );
   }
